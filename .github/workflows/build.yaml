@@ -1,0 +1,30 @@
+name: Run make.sh with manual intervention
+
+on:
+  workflow_dispatch: # 手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-noble
+
+    steps:
+      - run: echo "第一步：获取代码"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - run: echo "第二步：运行 make.sh 脚本"
+      - name: Grant execute permission for make.sh
+        run: chmod +x *.sh && ./make.sh
+
+      - run: echo "第三步：等待手动干预"
+      - name: Manual intervention (SSH into the runner)
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true # 仅触发者可登录
+        timeout-minutes: 7 # 最多等待7分钟
+
+      - run: echo "第四步：开始构建"
+      - name: Continue after intervention
+        run: |
+          echo "=== Stage 2: continuing build ==="
+          bash ./make.sh --stage2
