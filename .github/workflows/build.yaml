@@ -1,4 +1,4 @@
-name: Run make.sh with manual intervention
+name: openwrt-build
 
 on:
   workflow_dispatch: # 手动触发
@@ -14,7 +14,7 @@ jobs:
 
       - run: echo "第二步：运行 make.sh 脚本"
       - name: Grant execute permission for make.sh
-        run: chmod +x *.sh && ./make.sh
+        run: chmod +x *.sh && sudo ./make.sh
 
       - run: echo "第三步：等待手动干预"
       - name: Manual intervention (SSH into the runner)
@@ -25,6 +25,4 @@ jobs:
 
       - run: echo "第四步：开始构建"
       - name: Continue after intervention
-        run: |
-          echo "=== Stage 2: continuing build ==="
-          bash ./make.sh --stage2
+        run: make world -j$(nproc) V=5
