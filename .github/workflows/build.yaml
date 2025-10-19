@@ -19,7 +19,7 @@ jobs:
 
       - name: "拷贝配置"
         run: |
-          cp ~/config ~/openwrt/.config
+          cp ./config ~/openwrt/.config
 
       - name: "开始构建"
         run: make world V=s -j$(nproc)
