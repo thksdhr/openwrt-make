@@ -14,7 +14,7 @@ jobs:
       - name: "设置环境"
         run: |
           chmod +x *.sh
-          sudo ./init.sh
+          bash init.sh
 
       - name: "开始构建"
         run: |
