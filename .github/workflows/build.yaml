@@ -11,20 +11,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 获取源码
+      - name: "获取源码"
         uses: actions/checkout@v4
 
-      - name: "设置环境"
+      - name: "开始构建OpenWRT镜像"
         run: |
-          bash init.sh
+          bash build.sh
 
-      - name: "开始构建"
-        run: |
-          cd ./openwrt
-          make world V=s -j$(nproc)
-
-      - name: "上传固件"
+      - name: "上传构建后固件"
         uses: actions/upload-artifact@v4
         with:
           name: openwrt-firmware
-          path: ~/openwrt/bin/targets/
+          path: openwrt/bin/targets/
+
+      - name: "上传构建日志"
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: make.log

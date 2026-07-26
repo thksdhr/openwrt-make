@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# 修改默认 LAN IP 为 192.168.5.1
+uci set network.lan.ipaddr='192.168.5.1'
+
+# 自定义时区为中国上海
+uci set system.@system[0].zonename='Asia/Shanghai'
+uci set system.@system[0].timezone='CST-8'
+
+# 如果需要修改主机名
+uci set system.@system[0].hostname='OpenWrt-Router'
+
+# 提交保存 UCI 配置
+uci commit network
+uci commit system
+
+exit 0

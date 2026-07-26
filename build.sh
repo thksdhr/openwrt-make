@@ -1,27 +1,11 @@
 #!/bin/bash
 SHELL_PATH=$(readlink -f "${BASH_SOURCE[0]}")
-SHELL_DIR=$(dirname $SHELL_PATH)
-echo "SHELL_PATH: $SHELL_PATH"
-echo "SHELL_DIR: $SHELL_DIR"
-
+SHELL_DIR=$(dirname ${SHELL_PATH})
+echo "SHELL_PATH: ${SHELL_PATH}"
+echo "SHELL_DIR: ${SHELL_DIR}"
 
 # 环境变量
 BuildVersion="v25.12.5"
-
-# sudo apt-get update
-# sudo apt-get install -y \
-#   build-essential clang g++ gcc-multilib g++-multilib pkgconf ccache \
-#   autoconf automake libtool cmake ninja-build bc m4 patch fakeroot quilt \
-#   file sudo time jq locales \
-#   git git-lfs subversion mercurial wget curl rsync unzip \
-#   python3 python3-dev python3-pip python3-wheel \
-#   libncurses5-dev libncursesw5-dev libncurses-dev zlib1g-dev libssl-dev libelf-dev \
-#   libglib2.0-dev libfuse-dev libcap-dev libattr1-dev libdw-dev uuid-dev \
-#   liblzma-dev libzstd-dev libbz2-dev libxml2-utils \
-#   gettext texinfo gawk flex bison gperf \
-#   genisoimage lzop squashfs-tools zstd upx \
-#   ecj fastjar java-propose-classpath \
-#   perl xsltproc
 
 # 更新包管理器缓存
 sudo apt-get update
@@ -34,7 +18,6 @@ sudo apt-get install -y build-essential clang flex bison g++ gawk \
 # 打包 iso 需要的依赖
 sudo apt-get install -y genisoimage
 
-
 ######################################################################
 # 下载 OpenWrt 源码并初始化 feeds
 ######################################################################
@@ -43,7 +26,10 @@ sudo apt-get install -y genisoimage
 git clone https://git.openwrt.org/openwrt/openwrt.git
 
 # 进入源码目录
-cd openwrt
+cd ${SHELL_DIR}/openwrt
+
+# 建立文件夹
+mkdir -p files/etc/uci-defaults/
 
 # 切换分支
 git checkout ${BuildVersion}
@@ -56,4 +42,12 @@ git checkout ${BuildVersion}
 # 拷贝配置
 ######################################################################
 
-cp ../config ./.config
+cp ${SHELL_DIR}/config ${SHELL_DIR}/openwrt/.config
+
+######################################################################
+# 开始编译
+######################################################################
+
+(time make world V=s -j$(nproc)) 2>&1 | tee -a ${SHELL_DIR}/make.log
+
+echo "END"
