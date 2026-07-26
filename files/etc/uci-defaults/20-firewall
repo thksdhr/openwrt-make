@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# 设置防火墙全局策略(入站、出站、转发)为允许
+uci set firewall.@defaults[0].input='ACCEPT'
+uci set firewall.@defaults[0].output='ACCEPT'
+uci set firewall.@defaults[0].forward='ACCEPT'
+
+# 清除所有区域 (zone)
+while uci -q delete firewall.@zone[0]; do :; done
+# 清除所有区域间转发规则 (forwarding)
+while uci -q delete firewall.@forwarding[0]; do :; done
+# 清除所有自定义规则 (rule)
+while uci -q delete firewall.@rule[0]; do :; done
+# 清除所有端口转发/重定向 (redirect)
+while uci -q delete firewall.@redirect[0]; do :; done
+
+# 保存并重启防火墙
+uci commit firewall
+/etc/init.d/firewall restart

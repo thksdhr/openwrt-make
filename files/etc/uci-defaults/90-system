@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# 修改系统 Hostname
+uci set system.@system[0].hostname='TAOZIG-OpenWrt'
+
+# 修改系统 时区+时间格式
+uci set system.@system[0].zonename='Asia/Taipei'
+uci set system.@system[0].timezone='CST-8'
+uci set system.@system[0].clock_hourcycle='h23'
+
+# 应用配置
+uci commit system
+/etc/init.d/system restart

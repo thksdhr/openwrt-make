@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# 设置 root 账户密码
+echo "root:root" | chpasswd

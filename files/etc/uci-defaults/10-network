@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# 1. 设置 LAN 接口为静态 IP
+uci set network.lan.proto='static'
+uci set network.lan.ipaddr='192.168.77.200'
+uci set network.lan.netmask='255.255.255.0'
+uci set network.lan.gateway='192.168.77.1'
+uci set network.lan.dns='192.168.77.1'
+
+# 2. 关闭 LAN 接口的 DHCP 服务
+uci set dhcp.lan.ignore='1'
+
+# 3. 提交配置修改
+uci commit network
+uci commit dhcp
+
+# 4. 重启网络与 DHCP 服务使其生效
+/etc/init.d/network restart
+/etc/init.d/dnsmasq restart
