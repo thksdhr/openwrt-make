@@ -1,11 +1,13 @@
 name: openwrt-build
 
 on:
-  workflow_dispatch: # 手动触发
+  push:
+    branches: main
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: debain-13
+    runs-on: ubuntu-latest
 
     steps:
       - name: 获取源码
@@ -13,7 +15,6 @@ jobs:
 
       - name: "设置环境"
         run: |
-          chmod +x *.sh
           bash init.sh
 
       - name: "开始构建"

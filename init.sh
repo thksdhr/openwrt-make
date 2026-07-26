@@ -1,5 +1,9 @@
 #!/bin/bash
-# Install OpenWrt build dependencies for Ubuntu/Debian (tested on Ubuntu 24.04)
+SHELL_PATH=$(readlink -f "${BASH_SOURCE[0]}")
+SHELL_DIR=$(dirname $SHELL_PATH)
+echo "SHELL_PATH: $SHELL_PATH"
+echo "SHELL_DIR: $SHELL_DIR"
+
 
 # 环境变量
 BuildVersion="v25.12.5"
