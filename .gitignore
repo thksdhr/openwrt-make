@@ -1,0 +1,8 @@
+# ALL ZIP
+*.tgz
+*.tar.gz
+*.tar
+
+
+# temp floder
+openwrt/

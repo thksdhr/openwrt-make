@@ -1,6 +1,9 @@
 #!/bin/bash
 # Install OpenWrt build dependencies for Ubuntu/Debian (tested on Ubuntu 24.04)
 
+# 环境变量
+BuildVersion="v25.12.5"
+
 # sudo apt-get update
 # sudo apt-get install -y \
 #   build-essential clang g++ gcc-multilib g++-multilib pkgconf ccache \
@@ -16,10 +19,10 @@
 #   ecj fastjar java-propose-classpath \
 #   perl xsltproc
 
-# 安装依赖
+# 更新包管理器缓存
+sudo apt-get update
 
 # 官方推荐安装的依赖
-sudo apt-get update
 sudo apt-get install -y build-essential clang flex bison g++ gawk \
   gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev \
   python3-setuptools rsync swig unzip zlib1g-dev file wget
@@ -33,12 +36,13 @@ sudo apt-get install -y genisoimage
 ######################################################################
 
 # download and extract OpenWrt source code
-wget https://github.com/openwrt/openwrt/archive/refs/tags/v24.10.5.tar.gz
-tar -zxvf v24.10.5.tar.gz
+git clone https://git.openwrt.org/openwrt/openwrt.git
 
 # 进入源码目录
-mv openwrt-24.10.5 openwrt
 cd openwrt
+
+# 切换分支
+git checkout ${BuildVersion}
 
 # update and install feeds
 ./scripts/feeds update -a
