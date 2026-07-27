@@ -45,7 +45,7 @@ git checkout ${BuildVersion}
 ######################################################################
 
 cp ${SHELL_DIR}/config ${SHELL_DIR}/openwrt/.config
-cp ${SHELL_DIR}/files ${SHELL_DIR}/openwrt/
+cp -r ${SHELL_DIR}/files ${SHELL_DIR}/openwrt/
 
 ######################################################################
 # 开始编译

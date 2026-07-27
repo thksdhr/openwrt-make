@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Tips
+# 1. 配置内核设置必须检查编译时是否编译的对应模块
+# bbr: Kernel modules -> Network Support -> kmod-tcp-bbr (bbr必须配合fq使用)
+
+
+cat <<EOF | tee /etc/sysctl.d/99-z-custom.conf
+# bbr
+net.core.default_qdisc = fq
+net.ipv4.tcp_congestion_control = bbr
+EOF

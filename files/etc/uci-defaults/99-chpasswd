@@ -1,4 +1,7 @@
 #!/bin/sh
 
-# 设置 root 账户密码
-echo "root:root" | chpasswd
+# 设置 root 账户密码, 需编译 chpasswd 模块
+# echo "root:root" | chpasswd
+
+# 使用 passwd 设置账户密码
+(sleep 1; echo "root"; sleep 1; echo "root") | passwd root

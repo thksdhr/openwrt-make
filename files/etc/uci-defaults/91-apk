@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# 更换清华源
+sed -i 's_https\?://downloads.openwrt.org_https://mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/apk/repositories.d/distfeeds.list
+
