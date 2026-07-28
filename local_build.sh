@@ -10,8 +10,8 @@ SHELL_TIME=$(date +%Y.%m.%d-%H.%M.%S)
 cd ${SHELL_DIR}/openwrt
 
 # update and install feeds
-# ./scripts/feeds update -a
-# ./scripts/feeds install -a
+./scripts/feeds update -a
+./scripts/feeds install -a
 
 ######################################################################
 # 拷贝配置
